@@ -1,4 +1,4 @@
-package filehandlercli;
+package utils;
 
 import java.util.Scanner;
 

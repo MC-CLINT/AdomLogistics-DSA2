@@ -1,4 +1,4 @@
-package filehandlercli;
+package utils;
 
 public class InputUtils {
   // Checks if string is a valid integer
