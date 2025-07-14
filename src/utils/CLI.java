@@ -1,218 +1,355 @@
 package utils;
 
 import vehicle.Vehicle;
+import delivery.PackageDelivery;
 import java.util.List;
 import java.util.Scanner;
 
 public class CLI {
-  private Scanner scanner = new Scanner(System.in);
-  private FileHandler fileHandler = new FileHandler();
+    private Scanner scanner = new Scanner(System.in);
+    private FileHandler fileHandler = new FileHandler();
 
-  public void showMainMenu() {
-    System.out.println("=== Adom Logistics System ===");
-    System.out.println("[1] Manage Vehicles");
-    System.out.println("[2] Assign Drivers");
-    System.out.println("[3] Track Deliveries");
-    System.out.println("[4] Schedule Maintenance");
-    System.out.println("[5] Fuel Efficiency Report");
-    System.out.println("[0] Exit");
-    System.out.print("Enter choice: ");
-  }
-
-  public void start() {
-    boolean running = true;
-    while (running) {
-      showMainMenu();
-      String choice = scanner.nextLine().trim();
-      switch (choice) {
-        case "1":
-          manageVehiclesMenu();
-          break;
-        case "2":
-          assignDriversMenu();
-          break;
-        case "3":
-          trackDeliveriesMenu();
-          break;
-        case "4":
-          scheduleMaintenanceMenu();
-          break;
-        case "5":
-          fuelEfficiencyReportMenu();
-          break;
-        case "0":
-          running = false;
-          System.out.println("Exiting system. Goodbye!");
-          break;
-        default:
-          System.out.println("Invalid choice. Please try again.");
-      }
-      System.out.println();
+    public void showMainMenu() {
+        System.out.println("=== Adom Logistics System ===");
+        System.out.println("[1] Manage Vehicles");
+        System.out.println("[2] Assign Drivers");
+        System.out.println("[3] Track Deliveries");
+        System.out.println("[4] Schedule Maintenance");
+        System.out.println("[5] Fuel Efficiency Report");
+        System.out.println("[0] Exit");
+        System.out.print("Enter choice: ");
     }
-  }
 
-  private void manageVehiclesMenu() {
-    boolean inMenu = true;
-    while (inMenu) {
-      System.out.println("--- Manage Vehicles ---");
-      System.out.println("[1] Add Vehicle");
-      System.out.println("[2] List Vehicles");
-      System.out.println("[3] Remove Vehicle");
-      System.out.println("[4] Update Vehicle");
-      System.out.println("[0] Back to Main Menu");
-      System.out.print("Enter choice: ");
-      String choice = scanner.nextLine().trim();
-      switch (choice) {
-        case "1":
-          System.out.println("Add Vehicle selected.");
-          // TODO: Integrate with Vehicle logic (e.g., FileHandler.addVehicle(scanner))
-          break;
-        case "2":
-          System.out.println("List Vehicles selected.");
-          List<Vehicle> vehicles = fileHandler.readVehiclesFromFile("../data/vehicle.txt");
-          if (vehicles.isEmpty()) {
-            System.out.println("No vehicles found.");
-          } else {
-            for (Vehicle v : vehicles) {
-              System.out.println(v); // Uses Vehicle's toString()
+    public void start() {
+        boolean running = true;
+        while (running) {
+            showMainMenu();
+            String choice = scanner.nextLine().trim();
+            switch (choice) {
+                case "1":
+                    manageVehiclesMenu();
+                    break;
+                case "2":
+                    assignDriversMenu();
+                    break;
+                case "3":
+                    trackDeliveriesMenu();
+                    break;
+                case "4":
+                    scheduleMaintenanceMenu();
+                    break;
+                case "5":
+                    fuelEfficiencyReportMenu();
+                    break;
+                case "0":
+                    running = false;
+                    System.out.println("Exiting system. Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
             }
-          }
-          break;
-        case "3":
-          System.out.println("Remove Vehicle selected.");
-          // TODO: Integrate with Vehicle logic (e.g., FileHandler.removeVehicle(scanner))
-          break;
-        case "4":
-          System.out.println("Update Vehicle selected.");
-          // TODO: Integrate with Vehicle logic (e.g., FileHandler.updateVehicle(scanner))
-          break;
-        case "0":
-          inMenu = false;
-          break;
-        default:
-          System.out.println("Invalid choice. Please try again.");
-      }
-      System.out.println();
+            System.out.println();
+        }
     }
-  }
 
-  // The rest of your menu methods below remain unchanged
-  private void assignDriversMenu() {
-    boolean inMenu = true;
-    while (inMenu) {
-      System.out.println("--- Assign Drivers ---");
-      System.out.println("[1] Add Driver");
-      System.out.println("[2] List Drivers");
-      System.out.println("[3] Remove Driver");
-      System.out.println("[4] Update Driver");
-      System.out.println("[0] Back to Main Menu");
-      System.out.print("Enter choice: ");
-      String choice = scanner.nextLine().trim();
-      switch (choice) {
-        case "1":
-          System.out.println("Add Driver selected.");
-          // TODO: Integrate with Driver logic
-          break;
-        case "2":
-          System.out.println("List Drivers selected.");
-          // TODO: Integrate with Driver logic
-          break;
-        case "3":
-          System.out.println("Remove Driver selected.");
-          // TODO: Integrate with Driver logic
-          break;
-        case "4":
-          System.out.println("Update Driver selected.");
-          // TODO: Integrate with Driver logic
-          break;
-        case "0":
-          inMenu = false;
-          break;
-        default:
-          System.out.println("Invalid choice. Please try again.");
-      }
-      System.out.println();
+    private void manageVehiclesMenu() {
+        boolean inMenu = true;
+        while (inMenu) {
+            System.out.println("--- Manage Vehicles ---");
+            System.out.println("[1] Add Vehicle");
+            System.out.println("[2] List Vehicles");
+            System.out.println("[3] Remove Vehicle");
+            System.out.println("[4] Update Vehicle");
+            System.out.println("[0] Back to Main Menu");
+            System.out.print("Enter choice: ");
+            String choice = scanner.nextLine().trim();
+            switch (choice) {
+                case "1":
+                    System.out.println("--- Add Vehicle ---");
+                    System.out.print("Enter registration number: ");
+                    String regNumber = scanner.nextLine().trim();
+                    System.out.print("Enter vehicle type: ");
+                    String type = scanner.nextLine().trim();
+                    System.out.print("Enter mileage: ");
+                    int mileage = Integer.parseInt(scanner.nextLine().trim());
+                    System.out.print("Enter fuel usage: ");
+                    double fuelUsage = Double.parseDouble(scanner.nextLine().trim());
+                    System.out.print("Enter driver ID: ");
+                    String driverID = scanner.nextLine().trim();
+
+                    Vehicle newVehicle = new Vehicle(regNumber, type, mileage, fuelUsage, driverID);
+
+                    boolean success = fileHandler.addVehicleToFile("../data/vehicle.txt", newVehicle);
+                    if (success)
+                        System.out.println("Vehicle added successfully!");
+                    else
+                        System.out.println("Failed to add vehicle.");
+                    break;
+                case "2":
+                    System.out.println("List Vehicles selected.");
+                    List<Vehicle> vehicles = fileHandler.readVehiclesFromFile("../data/vehicle.txt");
+                    if (vehicles.isEmpty()) {
+                        System.out.println("No vehicles found.");
+                    } else {
+                        for (Vehicle v : vehicles) {
+                            System.out.println(v); // Uses Vehicle's toString()
+                        }
+                    }
+                    break;
+                case "3":
+                    System.out.println("--- Remove Vehicle ---");
+                    System.out.print("Enter registration number of vehicle to remove: ");
+                    String regNumRemove = scanner.nextLine().trim();
+                    boolean removed = fileHandler.removeVehicleFromFile("../data/vehicle.txt", regNumRemove);
+                    if (removed)
+                        System.out.println("Vehicle removed successfully!");
+                    else
+                        System.out.println("Vehicle not found.");
+                    break;
+                case "4":
+                    System.out.println("--- Update Vehicle ---");
+                    System.out.print("Enter registration number of vehicle to update: ");
+                    String regNumUpdate = scanner.nextLine().trim();
+                    List<Vehicle> allVehicles = fileHandler.readVehiclesFromFile("../data/vehicle.txt");
+                    Vehicle vehicleToUpdate = null;
+                    for (Vehicle v : allVehicles) {
+                        if (v.getRegNumber().equalsIgnoreCase(regNumUpdate)) {
+                            vehicleToUpdate = v;
+                            break;
+                        }
+                    }
+                    if (vehicleToUpdate == null) {
+                        System.out.println("Vehicle not found.");
+                        break;
+                    }
+                    System.out.println("Current details: " + vehicleToUpdate);
+                    System.out.print("Enter new vehicle type (leave blank to keep current): ");
+                    String newType = scanner.nextLine().trim();
+                    System.out.print("Enter new mileage (leave blank to keep current): ");
+                    String newMileageStr = scanner.nextLine().trim();
+                    System.out.print("Enter new fuel usage (leave blank to keep current): ");
+                    String newFuelUsageStr = scanner.nextLine().trim();
+                    System.out.print("Enter new driver ID (leave blank to keep current): ");
+                    String newDriverID = scanner.nextLine().trim();
+
+                    String updatedType = newType.isEmpty() ? vehicleToUpdate.getType() : newType;
+                    int updatedMileage = newMileageStr.isEmpty() ? vehicleToUpdate.getMileage() : Integer.parseInt(newMileageStr);
+                    double updatedFuelUsage = newFuelUsageStr.isEmpty() ? vehicleToUpdate.getFuelUsage()
+                            : Double.parseDouble(newFuelUsageStr);
+                    String updatedDriverID = newDriverID.isEmpty() ? vehicleToUpdate.getDriverID() : newDriverID;
+
+                    Vehicle updatedVehicle = new Vehicle(
+                            vehicleToUpdate.getRegNumber(),
+                            updatedType,
+                            updatedMileage,
+                            updatedFuelUsage,
+                            updatedDriverID);
+                    for (String record : vehicleToUpdate.getMaintenanceHistory()) {
+                        updatedVehicle.addMaintenanceRecord(record);
+                    }
+
+                    boolean isUpdated = fileHandler.updateVehicleInFile("../data/vehicle.txt", regNumUpdate, updatedVehicle);
+                    if (isUpdated)
+                        System.out.println("Vehicle updated successfully!");
+                    else
+                        System.out.println("Failed to update vehicle.");
+                    break;
+                case "0":
+                    inMenu = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+            System.out.println();
+        }
     }
-  }
 
-  private void trackDeliveriesMenu() {
-    boolean inMenu = true;
-    while (inMenu) {
-      System.out.println("--- Track Deliveries ---");
-      System.out.println("[1] Add Delivery");
-      System.out.println("[2] List Deliveries");
-      System.out.println("[3] Remove Delivery");
-      System.out.println("[4] Update Delivery");
-      System.out.println("[0] Back to Main Menu");
-      System.out.print("Enter choice: ");
-      String choice = scanner.nextLine().trim();
-      switch (choice) {
-        case "1":
-          System.out.println("Add Delivery selected.");
-          // TODO: Integrate with Delivery logic
-          break;
-        case "2":
-          System.out.println("List Deliveries selected.");
-          // TODO: Integrate with Delivery logic
-          break;
-        case "3":
-          System.out.println("Remove Delivery selected.");
-          // TODO: Integrate with Delivery logic
-          break;
-        case "4":
-          System.out.println("Update Delivery selected.");
-          // TODO: Integrate with Delivery logic
-          break;
-        case "0":
-          inMenu = false;
-          break;
-        default:
-          System.out.println("Invalid choice. Please try again.");
-      }
-      System.out.println();
+    private void assignDriversMenu() {
+        boolean inMenu = true;
+        while (inMenu) {
+            System.out.println("--- Assign Drivers ---");
+            System.out.println("[1] Add Driver");
+            System.out.println("[2] List Drivers");
+            System.out.println("[3] Remove Driver");
+            System.out.println("[4] Update Driver");
+            System.out.println("[0] Back to Main Menu");
+            System.out.print("Enter choice: ");
+            String choice = scanner.nextLine().trim();
+            switch (choice) {
+                case "1":
+                    System.out.println("Add Driver selected.");
+                    // TODO: Integrate with Driver logic
+                    break;
+                case "2":
+                    System.out.println("List Drivers selected.");
+                    // TODO: Integrate with Driver logic
+                    break;
+                case "3":
+                    System.out.println("Remove Driver selected.");
+                    // TODO: Integrate with Driver logic
+                    break;
+                case "4":
+                    System.out.println("Update Driver selected.");
+                    // TODO: Integrate with Driver logic
+                    break;
+                case "0":
+                    inMenu = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+            System.out.println();
+        }
     }
-  }
 
-  private void scheduleMaintenanceMenu() {
-    boolean inMenu = true;
-    while (inMenu) {
-      System.out.println("--- Schedule Maintenance ---");
-      System.out.println("[1] Add Maintenance Record");
-      System.out.println("[2] List Maintenance Records");
-      System.out.println("[3] Remove Maintenance Record");
-      System.out.println("[4] Update Maintenance Record");
-      System.out.println("[0] Back to Main Menu");
-      System.out.print("Enter choice: ");
-      String choice = scanner.nextLine().trim();
-      switch (choice) {
-        case "1":
-          System.out.println("Add Maintenance Record selected.");
-          // TODO: Integrate with Maintenance logic
-          break;
-        case "2":
-          System.out.println("List Maintenance Records selected.");
-          // TODO: Integrate with Maintenance logic
-          break;
-        case "3":
-          System.out.println("Remove Maintenance Record selected.");
-          // TODO: Integrate with Maintenance logic
-          break;
-        case "4":
-          System.out.println("Update Maintenance Record selected.");
-          // TODO: Integrate with Maintenance logic
-          break;
-        case "0":
-          inMenu = false;
-          break;
-        default:
-          System.out.println("Invalid choice. Please try again.");
-      }
-      System.out.println();
+    private void trackDeliveriesMenu() {
+        boolean inMenu = true;
+        while (inMenu) {
+            System.out.println("--- Track Deliveries ---");
+            System.out.println("[1] Add Delivery");
+            System.out.println("[2] List Deliveries");
+            System.out.println("[3] Remove Delivery");
+            System.out.println("[4] Update Delivery");
+            System.out.println("[0] Back to Main Menu");
+            System.out.print("Enter choice: ");
+            String choice = scanner.nextLine().trim();
+            switch (choice) {
+                case "1":
+                    System.out.println("--- Add Delivery ---");
+                    System.out.print("Enter package ID: ");
+                    String packageId = scanner.nextLine().trim();
+                    System.out.print("Enter origin: ");
+                    String origin = scanner.nextLine().trim();
+                    System.out.print("Enter destination: ");
+                    String destination = scanner.nextLine().trim();
+                    System.out.print("Enter assigned vehicle: ");
+                    String assignedVehicle = scanner.nextLine().trim();
+                    System.out.print("Enter assigned driver: ");
+                    String assignedDriver = scanner.nextLine().trim();
+                    System.out.print("Enter ETA (minutes): ");
+                    int eta = Integer.parseInt(scanner.nextLine().trim());
+
+                    PackageDelivery newDelivery = new PackageDelivery(packageId, origin, destination, assignedVehicle, assignedDriver, eta);
+                    boolean deliveryAdded = fileHandler.addDeliveryToFile("../data/delivery.txt", newDelivery);
+                    if (deliveryAdded)
+                        System.out.println("Delivery added successfully!");
+                    else
+                        System.out.println("Failed to add delivery.");
+                    break;
+                case "2":
+                    System.out.println("--- List Deliveries ---");
+                    List<PackageDelivery> deliveries = fileHandler.readDeliveriesFromFile("../data/delivery.txt");
+                    if (deliveries.isEmpty()) {
+                        System.out.println("No deliveries found.");
+                    } else {
+                        for (PackageDelivery pd : deliveries) {
+                            System.out.println(pd); // Uses PackageDelivery toString()
+                        }
+                    }
+                    break;
+                case "3":
+                    System.out.println("--- Remove Delivery ---");
+                    System.out.print("Enter package ID to remove: ");
+                    String pkgRemove = scanner.nextLine().trim();
+                    boolean deliveryRemoved = fileHandler.removeDeliveryFromFile("../data/delivery.txt", pkgRemove);
+                    if (deliveryRemoved)
+                        System.out.println("Delivery removed successfully!");
+                    else
+                        System.out.println("Delivery not found.");
+                    break;
+                case "4":
+                    System.out.println("--- Update Delivery ---");
+                    System.out.print("Enter package ID to update: ");
+                    String pkgUpdate = scanner.nextLine().trim();
+                    List<PackageDelivery> allDeliveries = fileHandler.readDeliveriesFromFile("../data/delivery.txt");
+                    PackageDelivery deliveryToUpdate = null;
+                    for (PackageDelivery pd : allDeliveries) {
+                        if (pd.getPackageId().equalsIgnoreCase(pkgUpdate)) {
+                            deliveryToUpdate = pd;
+                            break;
+                        }
+                    }
+                    if (deliveryToUpdate == null) {
+                        System.out.println("Delivery not found.");
+                        break;
+                    }
+                    System.out.println("Current details: " + deliveryToUpdate);
+                    System.out.print("Enter new destination (leave blank to keep current): ");
+                    String newDest = scanner.nextLine().trim();
+                    System.out.print("Enter new ETA (leave blank to keep current): ");
+                    String newEtaStr = scanner.nextLine().trim();
+                    System.out.print("Enter new status (leave blank to keep current): ");
+                    String newStatus = scanner.nextLine().trim();
+
+                    String updatedDestination = newDest.isEmpty() ? deliveryToUpdate.getDestination() : newDest;
+                    int updatedEta = newEtaStr.isEmpty() ? deliveryToUpdate.getEta() : Integer.parseInt(newEtaStr);
+                    String updatedStatus = newStatus.isEmpty() ? deliveryToUpdate.getStatus() : newStatus;
+
+                    PackageDelivery updatedDelivery = new PackageDelivery(
+                            deliveryToUpdate.getPackageId(),
+                            deliveryToUpdate.getOrigin(),
+                            updatedDestination,
+                            deliveryToUpdate.getAssignedVehicle(),
+                            deliveryToUpdate.getAssignedDriver(),
+                            updatedEta);
+                    updatedDelivery.updateStatus(updatedStatus);
+
+                    boolean deliveryUpdated = fileHandler.updateDeliveryInFile("../data/delivery.txt", pkgUpdate, updatedDelivery);
+                    if (deliveryUpdated)
+                        System.out.println("Delivery updated successfully!");
+                    else
+                        System.out.println("Failed to update delivery.");
+                    break;
+                case "0":
+                    inMenu = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+            System.out.println();
+        }
     }
-  }
 
-  private void fuelEfficiencyReportMenu() {
-    System.out.println("--- Fuel Efficiency Report ---");
-    // TODO: Integrate with Report logic (e.g., FileHandler.fuelEfficiencyReport())
-  }
+    private void scheduleMaintenanceMenu() {
+        boolean inMenu = true;
+        while (inMenu) {
+            System.out.println("--- Schedule Maintenance ---");
+            System.out.println("[1] Add Maintenance Record");
+            System.out.println("[2] List Maintenance Records");
+            System.out.println("[3] Remove Maintenance Record");
+            System.out.println("[4] Update Maintenance Record");
+            System.out.println("[0] Back to Main Menu");
+            System.out.print("Enter choice: ");
+            String choice = scanner.nextLine().trim();
+            switch (choice) {
+                case "1":
+                    System.out.println("Add Maintenance Record selected.");
+                    // TODO: Integrate with Maintenance logic
+                    break;
+                case "2":
+                    System.out.println("List Maintenance Records selected.");
+                    // TODO: Integrate with Maintenance logic
+                    break;
+                case "3":
+                    System.out.println("Remove Maintenance Record selected.");
+                    // TODO: Integrate with Maintenance logic
+                    break;
+                case "4":
+                    System.out.println("Update Maintenance Record selected.");
+                    // TODO: Integrate with Maintenance logic
+                    break;
+                case "0":
+                    inMenu = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+            System.out.println();
+        }
+    }
+
+    private void fuelEfficiencyReportMenu() {
+        System.out.println("--- Fuel Efficiency Report ---");
+        // TODO: Integrate with Report logic
+    }
 }
