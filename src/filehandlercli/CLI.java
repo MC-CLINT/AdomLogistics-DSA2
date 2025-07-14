@@ -87,22 +87,117 @@ public class CLI {
   }
 
   private void assignDriversMenu() {
-    System.out.println("--- Assign Drivers ---");
-    // TODO: Integrate with Driver logic (e.g., FileHandler.assignDriver(scanner))
-    // TODO: Add submenu options if needed
+    boolean inMenu = true;
+    while (inMenu) {
+      System.out.println("--- Assign Drivers ---");
+      System.out.println("[1] Add Driver");
+      System.out.println("[2] List Drivers");
+      System.out.println("[3] Remove Driver");
+      System.out.println("[4] Update Driver");
+      System.out.println("[0] Back to Main Menu");
+      System.out.print("Enter choice: ");
+      String choice = scanner.nextLine().trim();
+      switch (choice) {
+        case "1":
+          System.out.println("Add Driver selected.");
+          // TODO: Integrate with Driver logic
+          break;
+        case "2":
+          System.out.println("List Drivers selected.");
+          // TODO: Integrate with Driver logic
+          break;
+        case "3":
+          System.out.println("Remove Driver selected.");
+          // TODO: Integrate with Driver logic
+          break;
+        case "4":
+          System.out.println("Update Driver selected.");
+          // TODO: Integrate with Driver logic
+          break;
+        case "0":
+          inMenu = false;
+          break;
+        default:
+          System.out.println("Invalid choice. Please try again.");
+      }
+      System.out.println();
+    }
   }
 
   private void trackDeliveriesMenu() {
-    System.out.println("--- Track Deliveries ---");
-    // TODO: Integrate with Delivery logic (e.g., FileHandler.trackDeliveries())
-    // TODO: Add submenu options if needed
+    boolean inMenu = true;
+    while (inMenu) {
+      System.out.println("--- Track Deliveries ---");
+      System.out.println("[1] Add Delivery");
+      System.out.println("[2] List Deliveries");
+      System.out.println("[3] Remove Delivery");
+      System.out.println("[4] Update Delivery");
+      System.out.println("[0] Back to Main Menu");
+      System.out.print("Enter choice: ");
+      String choice = scanner.nextLine().trim();
+      switch (choice) {
+        case "1":
+          System.out.println("Add Delivery selected.");
+          // TODO: Integrate with Delivery logic
+          break;
+        case "2":
+          System.out.println("List Deliveries selected.");
+          // TODO: Integrate with Delivery logic
+          break;
+        case "3":
+          System.out.println("Remove Delivery selected.");
+          // TODO: Integrate with Delivery logic
+          break;
+        case "4":
+          System.out.println("Update Delivery selected.");
+          // TODO: Integrate with Delivery logic
+          break;
+        case "0":
+          inMenu = false;
+          break;
+        default:
+          System.out.println("Invalid choice. Please try again.");
+      }
+      System.out.println();
+    }
   }
 
   private void scheduleMaintenanceMenu() {
-    System.out.println("--- Schedule Maintenance ---");
-    // TODO: Integrate with Maintenance logic (e.g.,
-    // FileHandler.scheduleMaintenance(scanner))
-    // TODO: Add submenu options if needed
+    boolean inMenu = true;
+    while (inMenu) {
+      System.out.println("--- Schedule Maintenance ---");
+      System.out.println("[1] Add Maintenance Record");
+      System.out.println("[2] List Maintenance Records");
+      System.out.println("[3] Remove Maintenance Record");
+      System.out.println("[4] Update Maintenance Record");
+      System.out.println("[0] Back to Main Menu");
+      System.out.print("Enter choice: ");
+      String choice = scanner.nextLine().trim();
+      switch (choice) {
+        case "1":
+          System.out.println("Add Maintenance Record selected.");
+          // TODO: Integrate with Maintenance logic
+          break;
+        case "2":
+          System.out.println("List Maintenance Records selected.");
+          // TODO: Integrate with Maintenance logic
+          break;
+        case "3":
+          System.out.println("Remove Maintenance Record selected.");
+          // TODO: Integrate with Maintenance logic
+          break;
+        case "4":
+          System.out.println("Update Maintenance Record selected.");
+          // TODO: Integrate with Maintenance logic
+          break;
+        case "0":
+          inMenu = false;
+          break;
+        default:
+          System.out.println("Invalid choice. Please try again.");
+      }
+      System.out.println();
+    }
   }
 
   private void fuelEfficiencyReportMenu() {
