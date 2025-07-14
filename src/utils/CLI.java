@@ -1,9 +1,12 @@
 package utils;
 
+import vehicle.Vehicle;
+import java.util.List;
 import java.util.Scanner;
 
 public class CLI {
   private Scanner scanner = new Scanner(System.in);
+  private FileHandler fileHandler = new FileHandler();
 
   public void showMainMenu() {
     System.out.println("=== Adom Logistics System ===");
@@ -66,7 +69,14 @@ public class CLI {
           break;
         case "2":
           System.out.println("List Vehicles selected.");
-          // TODO: Integrate with Vehicle logic (e.g., FileHandler.listVehicles())
+          List<Vehicle> vehicles = fileHandler.readVehiclesFromFile("../data/vehicle.txt");
+          if (vehicles.isEmpty()) {
+            System.out.println("No vehicles found.");
+          } else {
+            for (Vehicle v : vehicles) {
+              System.out.println(v); // Uses Vehicle's toString()
+            }
+          }
           break;
         case "3":
           System.out.println("Remove Vehicle selected.");
@@ -86,6 +96,7 @@ public class CLI {
     }
   }
 
+  // The rest of your menu methods below remain unchanged
   private void assignDriversMenu() {
     boolean inMenu = true;
     while (inMenu) {
