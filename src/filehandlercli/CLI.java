@@ -48,29 +48,65 @@ public class CLI {
     }
   }
 
-  // Stub methods for each main menu option:
   private void manageVehiclesMenu() {
-    System.out.println("--- Manage Vehicles ---");
-    // Add submenu logic here (e.g., add/list/remove vehicles)
+    boolean inMenu = true;
+    while (inMenu) {
+      System.out.println("--- Manage Vehicles ---");
+      System.out.println("[1] Add Vehicle");
+      System.out.println("[2] List Vehicles");
+      System.out.println("[3] Remove Vehicle");
+      System.out.println("[4] Update Vehicle");
+      System.out.println("[0] Back to Main Menu");
+      System.out.print("Enter choice: ");
+      String choice = scanner.nextLine().trim();
+      switch (choice) {
+        case "1":
+          System.out.println("Add Vehicle selected.");
+          // TODO: Integrate with Vehicle logic (e.g., FileHandler.addVehicle(scanner))
+          break;
+        case "2":
+          System.out.println("List Vehicles selected.");
+          // TODO: Integrate with Vehicle logic (e.g., FileHandler.listVehicles())
+          break;
+        case "3":
+          System.out.println("Remove Vehicle selected.");
+          // TODO: Integrate with Vehicle logic (e.g., FileHandler.removeVehicle(scanner))
+          break;
+        case "4":
+          System.out.println("Update Vehicle selected.");
+          // TODO: Integrate with Vehicle logic (e.g., FileHandler.updateVehicle(scanner))
+          break;
+        case "0":
+          inMenu = false;
+          break;
+        default:
+          System.out.println("Invalid choice. Please try again.");
+      }
+      System.out.println();
+    }
   }
 
   private void assignDriversMenu() {
     System.out.println("--- Assign Drivers ---");
-    // Add submenu logic here (e.g., assign/list drivers)
+    // TODO: Integrate with Driver logic (e.g., FileHandler.assignDriver(scanner))
+    // TODO: Add submenu options if needed
   }
 
   private void trackDeliveriesMenu() {
     System.out.println("--- Track Deliveries ---");
-    // Add submenu logic here (e.g., track/view deliveries)
+    // TODO: Integrate with Delivery logic (e.g., FileHandler.trackDeliveries())
+    // TODO: Add submenu options if needed
   }
 
   private void scheduleMaintenanceMenu() {
     System.out.println("--- Schedule Maintenance ---");
-    // Add submenu logic here (e.g., schedule/list maintenance)
+    // TODO: Integrate with Maintenance logic (e.g.,
+    // FileHandler.scheduleMaintenance(scanner))
+    // TODO: Add submenu options if needed
   }
 
   private void fuelEfficiencyReportMenu() {
     System.out.println("--- Fuel Efficiency Report ---");
-    // Add report logic here (e.g., calculate/view reports)
+    // TODO: Integrate with Report logic (e.g., FileHandler.fuelEfficiencyReport())
   }
 }
