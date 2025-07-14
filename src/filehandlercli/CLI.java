@@ -16,7 +16,6 @@ public class CLI {
     System.out.print("Enter choice: ");
   }
 
-  // This method keeps the CLI running until the user exits
   public void start() {
     boolean running = true;
     while (running) {
@@ -24,24 +23,19 @@ public class CLI {
       String choice = scanner.nextLine().trim();
       switch (choice) {
         case "1":
-          // manageVehicles();
-          System.out.println("Manage Vehicles selected.");
+          manageVehiclesMenu();
           break;
         case "2":
-          // assignDrivers();
-          System.out.println("Assign Drivers selected.");
+          assignDriversMenu();
           break;
         case "3":
-          // trackDeliveries();
-          System.out.println("Track Deliveries selected.");
+          trackDeliveriesMenu();
           break;
         case "4":
-          // scheduleMaintenance();
-          System.out.println("Schedule Maintenance selected.");
+          scheduleMaintenanceMenu();
           break;
         case "5":
-          // showFuelEfficiencyReport();
-          System.out.println("Fuel Efficiency Report selected.");
+          fuelEfficiencyReportMenu();
           break;
         case "0":
           running = false;
@@ -52,5 +46,31 @@ public class CLI {
       }
       System.out.println();
     }
+  }
+
+  // Stub methods for each main menu option:
+  private void manageVehiclesMenu() {
+    System.out.println("--- Manage Vehicles ---");
+    // Add submenu logic here (e.g., add/list/remove vehicles)
+  }
+
+  private void assignDriversMenu() {
+    System.out.println("--- Assign Drivers ---");
+    // Add submenu logic here (e.g., assign/list drivers)
+  }
+
+  private void trackDeliveriesMenu() {
+    System.out.println("--- Track Deliveries ---");
+    // Add submenu logic here (e.g., track/view deliveries)
+  }
+
+  private void scheduleMaintenanceMenu() {
+    System.out.println("--- Schedule Maintenance ---");
+    // Add submenu logic here (e.g., schedule/list maintenance)
+  }
+
+  private void fuelEfficiencyReportMenu() {
+    System.out.println("--- Fuel Efficiency Report ---");
+    // Add report logic here (e.g., calculate/view reports)
   }
 }
