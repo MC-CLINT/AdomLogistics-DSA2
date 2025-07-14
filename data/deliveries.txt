@@ -1,0 +1,2 @@
+PKG001 | Accra | Kumasi | REG123 | DR001 | 2025-07-15 | In Transit
+PKG002 | Tema | Takoradi | REG456 | DR002 | 2025-07-16 | Pending
