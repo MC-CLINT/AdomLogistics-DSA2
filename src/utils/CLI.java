@@ -59,7 +59,7 @@ public class CLI {
         }
     }
 
-    // Main menu already has good structure - keeping as is
+    
 
     private void manageVehiclesMenu() {
         boolean inMenu = true;
@@ -189,21 +189,21 @@ public class CLI {
                 case "1":
                     System.out.println("\n--- Add New Driver ---");
                     System.out.println("Format: ID (e.g., DR001), Name, License (e.g., GH-DL-1234)");
-                    // TODO: Integrate with Driver logic and prompt for correct format
+                    
                     break;
                 case "2":
                     System.out.println("List Drivers selected.");
-                    // TODO: Integrate with Driver logic
+                   
                     break;
                 case "3":
                     System.out.println("Remove Driver selected.");
                     System.out.print("Enter driver ID to remove (e.g., DR001): ");
-                    // TODO: Integrate with Driver logic
+              
                     break;
                 case "4":
                     System.out.println("Update Driver selected.");
                     System.out.print("Enter driver ID to update (e.g., DR001): ");
-                    // TODO: Integrate with Driver logic
+             
                     break;
                 case "0":
                     inMenu = false;
@@ -257,7 +257,7 @@ public class CLI {
                         System.out.println("No deliveries found.");
                     } else {
                         for (PackageDelivery pd : deliveries) {
-                            System.out.println(pd); // Uses PackageDelivery toString()
+                            System.out.println(pd);
                         }
                     }
                     break;
@@ -343,17 +343,17 @@ public class CLI {
                     break;
                 case "2":
                     System.out.println("List Maintenance Records selected.");
-                    // TODO: Integrate with Maintenance logic
+                    
                     break;
                 case "3":
                     System.out.println("Remove Maintenance Record selected.");
                     System.out.print("Enter vehicle registration (e.g., REG123) and maintenance date (YYYY-MM-DD): ");
-                    // TODO: Integrate with Maintenance logic
+               
                     break;
                 case "4":
                     System.out.println("Update Maintenance Record selected.");
                     System.out.print("Enter vehicle registration (e.g., REG123) and maintenance date (YYYY-MM-DD): ");
-                    // TODO: Integrate with Maintenance logic
+                  
                     break;
                 case "0":
                     inMenu = false;

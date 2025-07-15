@@ -61,20 +61,21 @@ public class DriverManager {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split("\s*\|\s*");
+                String[] parts = line.split("\\s*\\|\\s*");
+                if (parts.length < 6) continue; // skip malformed lines
                 Driver d = new Driver(
                     parts[0],
                     parts[1],
                     Integer.parseInt(parts[2].replace("yrs","")),
                     parts[3]
                 );
-                String routes = parts[4].replaceAll("[\[\]]","");
+                String routes = parts[4].replaceAll("[\\[\\]]","");
                 if (!routes.isEmpty()) {
                     for (String entry : routes.split(", ")) {
                         d.getRouteHistory().add(entry);
                     }
                 }
-                String infs = parts[5].replaceAll("[\[\]]","");
+                String infs = parts[5].replaceAll("[\\[\\]]","");
                 if (!infs.isEmpty()) {
                     for (String entry : infs.split(", ")) {
                         d.getInfractions().add(entry);
