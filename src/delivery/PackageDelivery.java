@@ -29,9 +29,18 @@ public class PackageDelivery {
         this.status = newStatus;
     }
 
+    // --- Getters for use in other packages ---
+    public String getPackageId() { return packageId; }
+    public String getOrigin() { return origin; }
+    public String getDestination() { return destination; }
+    public String getAssignedVehicle() { return assignedVehicle; }
+    public String getAssignedDriver() { return assignedDriver; }
+    public int getEta() { return eta; }
+    public String getStatus() { return status; }
+
     @Override
     public String toString() {
-        return "[" + packageId + "] " + origin + " to" + destination +
+        return "[" + packageId + "] " + origin + " to " + destination +
                 " | Vehicle: " + assignedVehicle +
                 " | Driver: " + assignedDriver +
                 " | ETA: " + eta + " mins | Status: " + status;
