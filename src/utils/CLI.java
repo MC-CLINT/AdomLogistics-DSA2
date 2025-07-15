@@ -469,4 +469,29 @@ public class CLI {
             return defaultValue;
         }
     }
+
+    private String getValidRegNumber() {
+        while (true) {
+            System.out.print("Enter registration number (e.g., AS12345623): ");
+            String regNumber = scanner.nextLine().trim();
+            // Ghanaian format: 2 letters, 4 digits, 2 digits (year)
+            if (!regNumber.matches("^[A-Za-z]{2}\d{4}\d{2}$")) {
+                System.out.println("Invalid format. Registration number must be two letters, four digits, and two digits for the year (e.g., AS123423). Try again.");
+                continue;
+            }
+            List<Vehicle> vehicles = fileHandler.readVehiclesFromFile();
+            boolean exists = false;
+            for (Vehicle v : vehicles) {
+                if (v.getRegNumber().equalsIgnoreCase(regNumber)) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (exists) {
+                System.out.println("Registration number already exists. Please enter a unique value.");
+                continue;
+            }
+            return regNumber;
+        }
+    }
 }
