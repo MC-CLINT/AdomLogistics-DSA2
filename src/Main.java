@@ -11,7 +11,7 @@ public class Main {
         boolean running = true;
 
         while (running) {
-            System.out.println("\n=== Fleet Management System ===");
+            System.out.println("\n=== Adom Logistics System ===");
             System.out.println("1. Add Vehicle");
             System.out.println("2. Search Vehicle");
             System.out.println("3. Remove Vehicle");
