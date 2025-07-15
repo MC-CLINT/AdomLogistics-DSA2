@@ -1,32 +1,33 @@
 package utils;
-
 import vehicle.Vehicle;
 import delivery.PackageDelivery;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 // Fuel report analyzer imports
 import FuelReportAnalyzer.FuelReport;
 import FuelReportAnalyzer.PerformanceFilter;
 import FuelReportAnalyzer.ReportHelper;
 import FuelReportAnalyzer.SortAlgorithms;
-
 public class CLI {
     private Scanner scanner = new Scanner(System.in);
     private FileHandler fileHandler = new FileHandler();
-
+    private driver.DriverManager driverManager = new driver.DriverManager();
     public void showMainMenu() {
-        System.out.println("=== Adom Logistics System ===");
-        System.out.println("[1] Manage Vehicles");
-        System.out.println("[2] Assign Drivers");
-        System.out.println("[3] Track Deliveries");
-        System.out.println("[4] Schedule Maintenance");
-        System.out.println("[5] Fuel Efficiency Report");
-        System.out.println("[0] Exit");
+        System.out.println("\n╔══════════════════════════════════╗");
+        System.out.println("║     Adom Logistics System        ║");
+        System.out.println("╚══════════════════════════════════╝");
+        System.out.println("\nA comprehensive fleet management solution for tracking");
+        System.out.println("vehicles, drivers, deliveries, maintenance and fuel efficiency.\n");
+        System.out.println("What would you like to do today?\n");
+        System.out.println("    [1] Manage Vehicles");
+        System.out.println("    [2] Assign Drivers"); 
+        System.out.println("    [3] Track Deliveries");
+        System.out.println("    [4] Schedule Maintenance");
+        System.out.println("    [5] Fuel Efficiency Report");
+        System.out.println("\n    [0] Exit");
         System.out.print("Enter choice: ");
     }
-
     public void start() {
         boolean running = true;
         while (running) {
@@ -58,9 +59,6 @@ public class CLI {
             System.out.println();
         }
     }
-
-    
-
     private void manageVehiclesMenu() {
         boolean inMenu = true;
         while (inMenu) {
@@ -86,9 +84,7 @@ public class CLI {
                     double fuelUsage = getValidDoubleInput();
                     System.out.print("Enter driver ID (e.g., DR001): ");
                     String driverID = scanner.nextLine().trim();
-
                     Vehicle newVehicle = new Vehicle(regNumber, type, mileage, fuelUsage, driverID);
-
                     boolean success = fileHandler.addVehicleToFile(newVehicle);
                     if (success)
                         System.out.println("Vehicle added successfully!");
@@ -141,13 +137,11 @@ public class CLI {
                     String newFuelUsageStr = scanner.nextLine().trim();
                     System.out.print("Enter new driver ID (leave blank to keep current): ");
                     String newDriverID = scanner.nextLine().trim();
-
                     String updatedType = newType.isEmpty() ? vehicleToUpdate.getType() : newType;
                     int updatedMileage = newMileageStr.isEmpty() ? vehicleToUpdate.getMileage() : parseOrDefaultInt(newMileageStr, vehicleToUpdate.getMileage());
                     double updatedFuelUsage = newFuelUsageStr.isEmpty() ? vehicleToUpdate.getFuelUsage()
                             : parseOrDefaultDouble(newFuelUsageStr, vehicleToUpdate.getFuelUsage());
                     String updatedDriverID = newDriverID.isEmpty() ? vehicleToUpdate.getDriverID() : newDriverID;
-
                     Vehicle updatedVehicle = new Vehicle(
                             vehicleToUpdate.getRegNumber(),
                             updatedType,
@@ -157,7 +151,6 @@ public class CLI {
                     for (String record : vehicleToUpdate.getMaintenanceHistory()) {
                         updatedVehicle.addMaintenanceRecord(record);
                     }
-
                     boolean isUpdated = fileHandler.updateVehicleInFile(regNumUpdate, updatedVehicle);
                     if (isUpdated)
                         System.out.println("Vehicle updated successfully!");
@@ -173,7 +166,6 @@ public class CLI {
             System.out.println();
         }
     }
-
     private void assignDriversMenu() {
         boolean inMenu = true;
         while (inMenu) {
@@ -188,22 +180,55 @@ public class CLI {
             switch (choice) {
                 case "1":
                     System.out.println("\n--- Add New Driver ---");
-                    System.out.println("Format: ID (e.g., DR001), Name, License (e.g., GH-DL-1234)");
-                    
+                    System.out.print("Enter driver ID (e.g., DR001): ");
+                    String driverId = scanner.nextLine().trim();
+                    System.out.print("Enter name: ");
+                    String name = scanner.nextLine().trim();
+                    System.out.print("Enter years of experience: ");
+                    int years = getValidIntInput();
+                    System.out.print("Enter license/region tag: ");
+                    String license = scanner.nextLine().trim();
+                    driver.Driver newDriver = new driver.Driver(driverId, name, years, license);
+                    driverManager.addDriver(newDriver);
+                    System.out.println("Driver added successfully!");
                     break;
                 case "2":
-                    System.out.println("List Drivers selected.");
-                   
+                    System.out.println("--- List Drivers ---");
+                    List<driver.Driver> drivers = driverManager.getDrivers();
+                    if (drivers.isEmpty()) System.out.println("No drivers found.");
+                    else for (driver.Driver d : drivers) System.out.println(d);
                     break;
                 case "3":
                     System.out.println("Remove Driver selected.");
                     System.out.print("Enter driver ID to remove (e.g., DR001): ");
-              
+                    String removeId = scanner.nextLine().trim();
+                    boolean removed = driverManager.removeDriver(removeId);
+                    if (removed) System.out.println("Driver removed successfully!");
+                    else System.out.println("Driver not found.");
                     break;
                 case "4":
                     System.out.println("Update Driver selected.");
                     System.out.print("Enter driver ID to update (e.g., DR001): ");
-             
+                    String updateId = scanner.nextLine().trim();
+                    driver.Driver driverToUpdate = driverManager.getDriver(updateId);
+                    if (driverToUpdate == null) {
+                        System.out.println("Driver not found.");
+                        break;
+                    }
+                    System.out.println("Current details: " + driverToUpdate);
+                    System.out.print("Enter new name (leave blank to keep current): ");
+                    String newName = scanner.nextLine().trim();
+                    System.out.print("Enter new years of experience (leave blank to keep current): ");
+                    String newYearsStr = scanner.nextLine().trim();
+                    System.out.print("Enter new license/region tag (leave blank to keep current): ");
+                    String newLicense = scanner.nextLine().trim();
+                    String updatedName = newName.isEmpty() ? driverToUpdate.getName() : newName;
+                    int updatedYears = newYearsStr.isEmpty() ? driverToUpdate.getYearsOfExperience() : parseOrDefaultInt(newYearsStr, driverToUpdate.getYearsOfExperience());
+                    String updatedLicense = newLicense.isEmpty() ? driverToUpdate.getRegionTag() : newLicense;
+                    driver.Driver updatedDriver = new driver.Driver(updateId, updatedName, updatedYears, updatedLicense);
+                    boolean updated = driverManager.replaceDriver(updateId, updatedDriver);
+                    if (updated) System.out.println("Driver updated successfully!");
+                    else System.out.println("Failed to update driver.");
                     break;
                 case "0":
                     inMenu = false;
@@ -214,11 +239,10 @@ public class CLI {
             System.out.println();
         }
     }
-
     private void trackDeliveriesMenu() {
         boolean inMenu = true;
         while (inMenu) {
-            System.out.println("--- Track Deliveries ---");
+            System.out.println("\n--- Track Deliveries ---");
             System.out.println("[1] Add Delivery");
             System.out.println("[2] List Deliveries");
             System.out.println("[3] Remove Delivery");
@@ -228,132 +252,99 @@ public class CLI {
             String choice = scanner.nextLine().trim();
             switch (choice) {
                 case "1":
-                    System.out.println("--- Add Delivery ---");
-                    System.out.println("Format: Package ID (e.g., PKG001), Origin (city), Destination (city), Assigned Vehicle (e.g., REG123), Assigned Driver (e.g., DR001), ETA (minutes, integer)");
+                    System.out.println("\n--- Add Delivery ---");
                     System.out.print("Enter package ID (e.g., PKG001): ");
                     String packageId = scanner.nextLine().trim();
                     System.out.print("Enter origin: ");
                     String origin = scanner.nextLine().trim();
                     System.out.print("Enter destination: ");
                     String destination = scanner.nextLine().trim();
-                    System.out.print("Enter assigned vehicle registration number (e.g., REG123): ");
+                    System.out.print("Enter assigned vehicle (e.g., REG123): ");
                     String assignedVehicle = scanner.nextLine().trim();
-                    System.out.print("Enter assigned driver ID (e.g., DR001): ");
+                    System.out.print("Enter assigned driver (e.g., DR001): ");
                     String assignedDriver = scanner.nextLine().trim();
-                    System.out.print("Enter ETA (minutes, as a whole number): ");
+                    System.out.print("Enter ETA (minutes): ");
                     int eta = getValidIntInput();
-
                     PackageDelivery newDelivery = new PackageDelivery(packageId, origin, destination, assignedVehicle, assignedDriver, eta);
-                    boolean deliveryAdded = fileHandler.addDeliveryToFile(newDelivery);
-                    if (deliveryAdded)
-                        System.out.println("Delivery added successfully!");
-                    else
-                        System.out.println("Failed to add delivery.");
+                    boolean added = fileHandler.addDeliveryToFile(newDelivery);
+                    if (added) System.out.println("Delivery added successfully!");
+                    else System.out.println("Failed to add delivery. Package ID may already exist.");
                     break;
                 case "2":
-                    System.out.println("--- List Deliveries ---");
+                    System.out.println("\n--- List Deliveries ---");
                     List<PackageDelivery> deliveries = fileHandler.readDeliveriesFromFile();
-                    if (deliveries.isEmpty()) {
-                        System.out.println("No deliveries found.");
-                    } else {
-                        for (PackageDelivery pd : deliveries) {
-                            System.out.println(pd);
-                        }
-                    }
+                    if (deliveries.isEmpty()) System.out.println("No deliveries found.");
+                    else for (PackageDelivery d : deliveries) System.out.println(d);
                     break;
                 case "3":
-                    System.out.println("--- Remove Delivery ---");
-                    System.out.print("Enter package ID to remove (e.g., PKG001): ");
-                    String pkgRemove = scanner.nextLine().trim();
-                    boolean deliveryRemoved = fileHandler.removeDeliveryFromFile(pkgRemove);
-                    if (deliveryRemoved)
-                        System.out.println("Delivery removed successfully!");
-                    else
-                        System.out.println("Delivery not found.");
-                    break;
-                case "4":
-                    System.out.println("--- Update Delivery ---");
-                    System.out.print("Enter package ID to update (e.g., PKG001): ");
-                    String pkgUpdate = scanner.nextLine().trim();
-                    List<PackageDelivery> allDeliveries = fileHandler.readDeliveriesFromFile();
-                    PackageDelivery deliveryToUpdate = null;
-                    for (PackageDelivery pd : allDeliveries) {
-                        if (pd.getPackageId().equalsIgnoreCase(pkgUpdate)) {
-                            deliveryToUpdate = pd;
+                    System.out.println("\n--- Remove Delivery ---");
+                    System.out.print("Enter vehicle registration number (e.g., REG123): ");
+                    String regNumRemove = scanner.nextLine().trim();
+                    System.out.print("Enter maintenance date (YYYY-MM-DD): ");
+                    String dateRemove = scanner.nextLine().trim();
+                    Vehicle vehicleRemove = null;
+                    List<Vehicle> vehiclesRemove = fileHandler.readVehiclesFromFile();
+                    for (Vehicle v : vehiclesRemove) {
+                        if (v.getRegNumber().equalsIgnoreCase(regNumRemove)) {
+                            vehicleRemove = v;
                             break;
                         }
                     }
-                    if (deliveryToUpdate == null) {
-                        System.out.println("Delivery not found.");
-                        break;
+                    if (vehicleRemove == null) {
+                        System.out.println("Vehicle not found.");
+                    } else {
+                        boolean removed = vehicleRemove.removeMaintenanceRecordByDate(dateRemove);
+                        if (removed) {
+                            boolean updated = fileHandler.updateVehicleInFile(regNumRemove, vehicleRemove);
+                            if (updated) System.out.println("Maintenance record removed successfully!");
+                            else System.out.println("Failed to update vehicle file.");
+                        } else {
+                            System.out.println("Maintenance record not found for the given date.");
+                        }
                     }
-                    System.out.println("Current details: " + deliveryToUpdate);
-                    System.out.print("Enter new destination (leave blank to keep current): ");
-                    String newDest = scanner.nextLine().trim();
-                    System.out.print("Enter new ETA (leave blank to keep current): ");
-                    String newEtaStr = scanner.nextLine().trim();
-                    System.out.print("Enter new status (leave blank to keep current): ");
-                    String newStatus = scanner.nextLine().trim();
-
-                    String updatedDestination = newDest.isEmpty() ? deliveryToUpdate.getDestination() : newDest;
-                    int updatedEta = newEtaStr.isEmpty() ? deliveryToUpdate.getEta() : parseOrDefaultInt(newEtaStr, deliveryToUpdate.getEta());
-                    String updatedStatus = newStatus.isEmpty() ? deliveryToUpdate.getStatus() : newStatus;
-
-                    PackageDelivery updatedDelivery = new PackageDelivery(
-                            deliveryToUpdate.getPackageId(),
-                            deliveryToUpdate.getOrigin(),
-                            updatedDestination,
-                            deliveryToUpdate.getAssignedVehicle(),
-                            deliveryToUpdate.getAssignedDriver(),
-                            updatedEta);
-                    updatedDelivery.updateStatus(updatedStatus);
-
-                    boolean deliveryUpdated = fileHandler.updateDeliveryInFile(pkgUpdate, updatedDelivery);
-                    if (deliveryUpdated)
-                        System.out.println("Delivery updated successfully!");
-                    else
-                        System.out.println("Failed to update delivery.");
-                    break;
-                case "0":
-                    inMenu = false;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-            System.out.println();
-        }
-    }
-
-    private void scheduleMaintenanceMenu() {
-        boolean inMenu = true;
-        while (inMenu) {
-            System.out.println("--- Schedule Maintenance ---");
-            System.out.println("[1] Add Maintenance Record");
-            System.out.println("[2] List Maintenance Records");
-            System.out.println("[3] Remove Maintenance Record");
-            System.out.println("[4] Update Maintenance Record");
-            System.out.println("[0] Back to Main Menu");
-            System.out.print("Enter choice: ");
-            String choice = scanner.nextLine().trim();
-            switch (choice) {
-                case "1":
-                    System.out.println("Add Maintenance Record selected.");
-                    System.out.println("Format: Vehicle Registration (e.g., REG123), Date (YYYY-MM-DD), Description (e.g., Oil Filter), Cost (e.g., 50.0)");
-                    // TODO: Integrate with Maintenance logic and prompt for correct format
-                    break;
-                case "2":
-                    System.out.println("List Maintenance Records selected.");
-                    
-                    break;
-                case "3":
-                    System.out.println("Remove Maintenance Record selected.");
-                    System.out.print("Enter vehicle registration (e.g., REG123) and maintenance date (YYYY-MM-DD): ");
-               
                     break;
                 case "4":
-                    System.out.println("Update Maintenance Record selected.");
-                    System.out.print("Enter vehicle registration (e.g., REG123) and maintenance date (YYYY-MM-DD): ");
-                  
+                    System.out.println("\n--- Update Maintenance Record ---");
+                    System.out.print("Enter vehicle registration number (e.g., REG123): ");
+                    String regNumUpdate = scanner.nextLine().trim();
+                    System.out.print("Enter maintenance date to update (YYYY-MM-DD): ");
+                    String dateUpdate = scanner.nextLine().trim();
+                    Vehicle vehicleUpdate = null;
+                    List<Vehicle> vehiclesUpdate = fileHandler.readVehiclesFromFile();
+                    for (Vehicle v : vehiclesUpdate) {
+                        if (v.getRegNumber().equalsIgnoreCase(regNumUpdate)) {
+                            vehicleUpdate = v;
+                            break;
+                        }
+                    }
+                    if (vehicleUpdate == null) {
+                        System.out.println("Vehicle not found.");
+                    } else {
+                        boolean found = false;
+                        List<String> records = vehicleUpdate.getMaintenanceHistory();
+                        for (int i = 0; i < records.size(); i++) {
+                            String[] parts = records.get(i).split("\\|");
+                            if (parts.length > 0 && parts[0].equals(dateUpdate)) {
+                                System.out.print("Enter new description (leave blank to keep current): ");
+                                String newDesc = scanner.nextLine().trim();
+                                System.out.print("Enter new cost (leave blank to keep current): ");
+                                String newCostStr = scanner.nextLine().trim();
+                                String desc = newDesc.isEmpty() ? parts[1] : newDesc;
+                                double updatedCost = newCostStr.isEmpty() ? Double.parseDouble(parts[2]) : parseOrDefaultDouble(newCostStr, Double.parseDouble(parts[2]));
+                                String updatedRecord = String.format("%s|%s|%.2f|%s", dateUpdate, desc, updatedCost, regNumUpdate);
+                                records.set(i, updatedRecord);
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (found) {
+                            boolean updated = fileHandler.updateVehicleInFile(regNumUpdate, vehicleUpdate);
+                            if (updated) System.out.println("Maintenance record updated successfully!");
+                            else System.out.println("Failed to update vehicle file.");
+                        } else {
+                            System.out.println("Maintenance record not found for the given date.");
+                        }
+                    }
                     break;
                 case "0":
                     inMenu = false;
@@ -472,12 +463,12 @@ public class CLI {
         }
     }
 
-    private String getValidRegNumber() {
+    public String getValidRegNumber() {
         while (true) {
             System.out.print("Enter registration number (e.g., AS12345623): ");
             String regNumber = scanner.nextLine().trim();
             // Ghanaian format: 2 letters, 4 digits, 2 digits (year)
-            if (!regNumber.matches("^[A-Za-z]{2}\d{4}\d{2}$")) {
+            if (!regNumber.matches("^[A-Za-z]{2}\\d{4}\\d{2}$")) {
                 System.out.println("Invalid format. Registration number must be two letters, four digits, and two digits for the year (e.g., AS123423). Try again.");
                 continue;
             }
@@ -496,4 +487,202 @@ public class CLI {
             return regNumber;
         }
     }
+
+    private void scheduleMaintenanceMenu() {
+        boolean inMenu = true;
+        while (inMenu) {
+            System.out.println("\n=== Schedule Maintenance ===");
+            System.out.println("[1] Add Maintenance Record");
+            System.out.println("[2] List Maintenance Records");
+            System.out.println("[3] Remove Maintenance Record");
+            System.out.println("[4] Update Maintenance Record");
+            System.out.println("[0] Back to Main Menu");
+            System.out.print("Enter choice: ");
+            String choice = scanner.nextLine().trim();
+    
+            switch (choice) {
+                case "1":
+                    addMaintenanceRecord();
+                    break;
+                case "2":
+                    listMaintenanceRecords();
+                    break;
+                case "3":
+                    removeMaintenanceRecord();
+                    break;
+                case "4":
+                    updateMaintenanceRecord();
+                    break;
+                case "0":
+                    inMenu = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+            System.out.println();
+        }
+    }
+
+
+    private void addMaintenanceRecord() {
+        System.out.println("\n--- Add Maintenance Record ---");
+        System.out.print("Enter vehicle registration number (e.g., REG123): ");
+        String regNumber = scanner.nextLine().trim();
+    
+        List<Vehicle> vehicles = fileHandler.readVehiclesFromFile();
+        Vehicle targetVehicle = null;
+    
+        for (Vehicle v : vehicles) {
+            if (v.getRegNumber().equalsIgnoreCase(regNumber)) {
+                targetVehicle = v;
+                break;
+            }
+        }
+    
+        if (targetVehicle == null) {
+            System.out.println("Vehicle not found.");
+            return;
+        }
+    
+        System.out.print("Enter maintenance date (YYYY-MM-DD): ");
+        String date = scanner.nextLine().trim();
+        System.out.print("Enter maintenance description: ");
+        String description = scanner.nextLine().trim();
+        System.out.print("Enter maintenance cost: ");
+        double cost = getValidDoubleInput();
+    
+        String record = String.format("%s|%s|%.2f|%s", date, description, cost, regNumber);
+        targetVehicle.addMaintenanceRecord(record);
+    
+        boolean updated = fileHandler.updateVehicleInFile(regNumber, targetVehicle);
+        if (updated) {
+            System.out.println("Maintenance record added successfully!");
+        } else {
+            System.out.println("Failed to update vehicle file.");
+        }
+    }
+
+    private void listMaintenanceRecords() {
+        System.out.println("\n--- List Maintenance Records ---");
+        System.out.print("Enter vehicle registration number (e.g., REG123): ");
+        String regNumber = scanner.nextLine().trim();
+    
+        List<Vehicle> vehicles = fileHandler.readVehiclesFromFile();
+        Vehicle vehicle = null;
+        for (Vehicle v : vehicles) {
+            if (v.getRegNumber().equalsIgnoreCase(regNumber)) {
+                vehicle = v;
+                break;
+            }
+        }
+    
+        if (vehicle == null) {
+            System.out.println("Vehicle not found.");
+            return;
+        }
+    
+        List<String> maintenanceRecords = vehicle.getMaintenanceHistory();
+        if (maintenanceRecords.isEmpty()) {
+            System.out.println("No maintenance records found for this vehicle.");
+        } else {
+            System.out.println("Maintenance Records for " + regNumber + ":");
+            for (String record : maintenanceRecords) {
+                System.out.println(record);
+            }
+        }
+    }
+
+    private void removeMaintenanceRecord() {
+        System.out.println("\n--- Remove Maintenance Record ---");
+        System.out.print("Enter vehicle registration number (e.g., REG123): ");
+        String regNumber = scanner.nextLine().trim();
+    
+        List<Vehicle> vehicles = fileHandler.readVehiclesFromFile();
+        Vehicle vehicle = null;
+        for (Vehicle v : vehicles) {
+            if (v.getRegNumber().equalsIgnoreCase(regNumber)) {
+                vehicle = v;
+                break;
+            }
+        }
+    
+        if (vehicle == null) {
+            System.out.println("Vehicle not found.");
+            return;
+        }
+    
+        System.out.print("Enter maintenance date to remove (YYYY-MM-DD): ");
+        String date = scanner.nextLine().trim();
+    
+        boolean removed = vehicle.removeMaintenanceRecordByDate(date);
+        if (removed) {
+            boolean updated = fileHandler.updateVehicleInFile(regNumber, vehicle);
+            if (updated) {
+                System.out.println("Maintenance record removed successfully.");
+            } else {
+                System.out.println("Failed to update vehicle file after removing record.");
+            }
+        } else {
+            System.out.println("No maintenance record found for the given date.");
+        }
+    }
+    private void updateMaintenanceRecord() {
+        System.out.println("\n--- Update Maintenance Record ---");
+        System.out.print("Enter vehicle registration number (e.g., REG123): ");
+        String regNumber = scanner.nextLine().trim();
+    
+        List<Vehicle> vehicles = fileHandler.readVehiclesFromFile();
+        Vehicle vehicle = null;
+        for (Vehicle v : vehicles) {
+            if (v.getRegNumber().equalsIgnoreCase(regNumber)) {
+                vehicle = v;
+                break;
+            }
+        }
+    
+        if (vehicle == null) {
+            System.out.println("Vehicle not found.");
+            return;
+        }
+    
+        System.out.print("Enter maintenance date to update (YYYY-MM-DD): ");
+        String date = scanner.nextLine().trim();
+    
+        boolean found = false;
+        List<String> records = vehicle.getMaintenanceHistory();
+    
+        for (int i = 0; i < records.size(); i++) {
+            String[] parts = records.get(i).split("\\|");
+            if (parts.length > 0 && parts[0].equals(date)) {
+                System.out.println("Current Description: " + parts[1]);
+                System.out.print("Enter new description (leave blank to keep current): ");
+                String newDesc = scanner.nextLine().trim();
+    
+                System.out.println("Current Cost: " + parts[2]);
+                System.out.print("Enter new cost (leave blank to keep current): ");
+                String newCostStr = scanner.nextLine().trim();
+    
+                String desc = newDesc.isEmpty() ? parts[1] : newDesc;
+                double updatedCost = newCostStr.isEmpty() ? Double.parseDouble(parts[2]) : parseOrDefaultDouble(newCostStr, Double.parseDouble(parts[2]));
+    
+                String updatedRecord = String.format("%s|%s|%.2f|%s", date, desc, updatedCost, regNumber);
+                records.set(i, updatedRecord);
+                found = true;
+                break;
+            }
+        }
+    
+        if (found) {
+            boolean updated = fileHandler.updateVehicleInFile(regNumber, vehicle);
+            if (updated) {
+                System.out.println("Maintenance record updated successfully.");
+            } else {
+                System.out.println("Failed to update vehicle file after modifying record.");
+            }
+        } else {
+            System.out.println("No maintenance record found for the given date.");
+        }
+    }
+        
+    
 }

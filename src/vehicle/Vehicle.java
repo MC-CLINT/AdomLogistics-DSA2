@@ -1,7 +1,7 @@
 package vehicle;
 
 import java.util.ArrayList;
-
+import java.util.List;
 public class Vehicle {
     private String regNumber;
     private String type;
@@ -9,6 +9,8 @@ public class Vehicle {
     private double fuelUsage;
     private String driverID;
     private ArrayList<String> maintenanceHistory;
+    // Assuming you have a List<MaintenanceRecord> maintenanceRecords;
+    private List<String> maintenanceRecords;
 
     public Vehicle(String regNumber, String type, int mileage, double fuelUsage, String driverID) {
         this.regNumber = regNumber;
@@ -17,6 +19,7 @@ public class Vehicle {
         this.fuelUsage = fuelUsage;
         this.driverID = driverID;
         this.maintenanceHistory = new ArrayList<String>();
+        this.maintenanceRecords = new ArrayList<>();
     }
 
     public String getRegNumber() {
@@ -57,6 +60,10 @@ public class Vehicle {
 
     public void addMaintenanceRecord(String record) {
         maintenanceHistory.add(record);
+    }
+
+    public boolean removeMaintenanceRecordByDate(String date) {
+        return maintenanceRecords.removeIf(record -> record.contains(date));
     }
 
     @Override

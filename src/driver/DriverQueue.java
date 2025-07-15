@@ -38,4 +38,36 @@ public class DriverQueue {
     public boolean isEmpty() {
         return head == null;
     }
+
+    public boolean removeDriver(String id) {
+        Node current = head;
+        Node prev = null;
+        while (current != null) {
+            if (current.driver.getDriverID().equals(id)) {
+                if (prev == null) { // Removing head
+                    head = current.next;
+                    if (head == null) tail = null;
+                } else {
+                    prev.next = current.next;
+                    if (current == tail) tail = prev;
+                }
+                return true;
+            }
+            prev = current;
+            current = current.next;
+        }
+        return false;
+    }
+
+    public boolean replaceDriver(String id, Driver newDriver) {
+        Node current = head;
+        while (current != null) {
+            if (current.driver.getDriverID().equals(id)) {
+                current.driver = newDriver;
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
+    }
 }

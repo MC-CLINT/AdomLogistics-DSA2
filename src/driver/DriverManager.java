@@ -7,6 +7,7 @@ public class DriverManager {
     private static final String DATA_FILE = "data/drivers.txt";
     private Map<String, Driver> drivers = new HashMap<>();
     private DriverQueue queue = new DriverQueue();
+    private List<Driver> driversList = new ArrayList<>();
 
     public DriverManager() {
         loadDrivers();
@@ -14,6 +15,7 @@ public class DriverManager {
 
     public void addDriver(Driver d) {
         drivers.put(d.getDriverID(), d);
+        driversList.add(d);
         queue.enqueue(d);
         saveDrivers();
     }
@@ -55,6 +57,41 @@ public class DriverManager {
         return Collections.emptyList();
     }
 
+    public List<Driver> getDrivers() {
+        return new ArrayList<>(driversList);
+    }
+
+    public boolean removeDriver(String id) {
+        Driver removed = drivers.remove(id);
+        if (removed != null) {
+            driversList.removeIf(driver -> driver.getDriverID().equals(id));
+            queue.removeDriver(id);
+            saveDrivers();
+            return true;
+        }
+        return false;
+    }
+
+    public Driver getDriver(String id) {
+        return drivers.get(id);
+    }
+
+    public boolean replaceDriver(String id, Driver newDriver) {
+        if (drivers.containsKey(id)) {
+            drivers.put(id, newDriver);
+            for (int i = 0; i < driversList.size(); i++) {
+                if (driversList.get(i).getDriverID().equals(id)) {
+                    driversList.set(i, newDriver);
+                    break;
+                }
+            }
+            queue.replaceDriver(id, newDriver);
+            saveDrivers();
+            return true;
+        }
+        return false;
+    }
+
     private void loadDrivers() {
         File file = new File(DATA_FILE);
         if (!file.exists()) return;
@@ -62,26 +99,27 @@ public class DriverManager {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split("\\s*\\|\\s*");
-                if (parts.length < 6) continue; // skip malformed lines
+                if (parts.length < 6) continue;
                 Driver d = new Driver(
                     parts[0],
                     parts[1],
-                    Integer.parseInt(parts[2].replace("yrs","")),
+                    Integer.parseInt(parts[2].replace("yrs", "")),
                     parts[3]
                 );
-                String routes = parts[4].replaceAll("[\\[\\]]","");
+                String routes = parts[4].replaceAll("[\\[\\]]", "");
                 if (!routes.isEmpty()) {
                     for (String entry : routes.split(", ")) {
                         d.getRouteHistory().add(entry);
                     }
                 }
-                String infs = parts[5].replaceAll("[\\[\\]]","");
+                String infs = parts[5].replaceAll("[\\[\\]]", "");
                 if (!infs.isEmpty()) {
                     for (String entry : infs.split(", ")) {
                         d.getInfractions().add(entry);
                     }
                 }
                 drivers.put(d.getDriverID(), d);
+                driversList.add(d);
                 queue.enqueue(d);
             }
         } catch (IOException e) {
@@ -103,3 +141,4 @@ public class DriverManager {
         }
     }
 }
+

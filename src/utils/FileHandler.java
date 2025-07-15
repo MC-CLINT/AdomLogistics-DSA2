@@ -12,6 +12,18 @@ public class FileHandler {
     private static final String DELIVERY_FILE = "data/delivery.txt";
     // Add more as needed (e.g., DRIVERS_FILE, MAINTENANCE_FILE)
 
+    // Assuming you have a List<Delivery> deliveriesList;
+    private List<PackageDelivery> deliveriesList;
+
+    public PackageDelivery getDelivery(String deliveryId) {
+        for (PackageDelivery delivery : deliveriesList) {
+            if (delivery.getPackageId().equals(deliveryId)) {
+                return delivery;
+            }
+        }
+        return null; // Not found
+    }
+
     // === VEHICLE METHODS ===
 
     public List<Vehicle> readVehiclesFromFile() {

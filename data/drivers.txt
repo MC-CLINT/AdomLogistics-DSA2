@@ -1,5 +1,9 @@
 DR001 | Mawuli Frank | 5yrs | REG123 | [Delay: 2025-06-03 - Accra Loop] | [Infraction: Speeding, 2025-04-02]
+
 DR002 | Osei Bonsu | 3yrs | REG456 | [Delay: 2025-07-11 - Kumasi] | []
+
 DR003 | Asamoah Oppong | 4yrs | GR1234-23 | [Delay: 2025-05-21 - Tamale] | [Infraction: Red Light, 2025-03-12]
-DR004 | Thelma Asare | 6yrs | AS5678-22 | [] | []
+
+DR004 | Okyeame Asare | 6yrs | AS5678-22 | [] | []
+
 DR005 | Osei Kwame Despite | 2yrs | BA9101-21 | [Delay: 2025-02-11 - Cape Coast] | [Infraction: Seatbelt, 2025-01-20]

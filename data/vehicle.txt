@@ -1,5 +1,4 @@
 REG456 | Van | 73000 | 10.2 | DR002 | [2025-07-10: Tire, GH₵800]
-REG123 | Truck | 120000 | 14.5 | DR001 | [2025-06-01: Oil Filter, GH₵400], [2025-08-14: Brake Pad, GH₵600]
 GR1234-23 | Pickup | 85000 | 11.8 | DR003 | [2025-05-20: Air Filter, GH₵480]
 AS5678-22 | SUV | 43000 | 9.7 | DR004 | [2025-03-15: Battery, GH₵960]
 BA9101-21 | Sedan | 67000 | 8.9 | DR005 | [2025-02-10: Spark Plug, GH₵320]
