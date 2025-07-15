@@ -1,2 +1,0 @@
-REG123 | 2025-06-01 | [Oil Filter, $50], [Brake Pad, $75] | Total: $125
-REG456 | 2025-07-10 | [Tire, $100] | Total: $100
