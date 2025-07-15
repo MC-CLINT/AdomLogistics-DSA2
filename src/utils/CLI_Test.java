@@ -1,4 +1,4 @@
-package filehandlercli;
+package utils;
 
 public class CLI_Test {
     public static void main(String[] args) {
