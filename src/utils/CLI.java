@@ -59,10 +59,12 @@ public class CLI {
         }
     }
 
+    // Main menu already has good structure - keeping as is
+
     private void manageVehiclesMenu() {
         boolean inMenu = true;
         while (inMenu) {
-            System.out.println("--- Manage Vehicles ---");
+            System.out.println("\n=== Manage Vehicles ===");
             System.out.println("[1] Add Vehicle");
             System.out.println("[2] List Vehicles");
             System.out.println("[3] Remove Vehicle");
@@ -72,7 +74,7 @@ public class CLI {
             String choice = scanner.nextLine().trim();
             switch (choice) {
                 case "1":
-                    System.out.println("--- Add Vehicle ---");
+                    System.out.println("\n--- Add New Vehicle ---");
                     System.out.println("Note: Registration number must be unique and contain only letters/numbers.");
                     System.out.print("Enter registration number (e.g., REG123): ");
                     String regNumber = scanner.nextLine().trim();
@@ -175,7 +177,7 @@ public class CLI {
     private void assignDriversMenu() {
         boolean inMenu = true;
         while (inMenu) {
-            System.out.println("--- Assign Drivers ---");
+            System.out.println("\n=== Assign Drivers ===");
             System.out.println("[1] Add Driver");
             System.out.println("[2] List Drivers");
             System.out.println("[3] Remove Driver");
@@ -185,8 +187,8 @@ public class CLI {
             String choice = scanner.nextLine().trim();
             switch (choice) {
                 case "1":
-                    System.out.println("Add Driver selected.");
-                    System.out.println("Format: ID (e.g., DR001), Name (e.g., John Doe), License (e.g., B1234567)");
+                    System.out.println("\n--- Add New Driver ---");
+                    System.out.println("Format: ID (e.g., DR001), Name, License (e.g., GH-DL-1234)");
                     // TODO: Integrate with Driver logic and prompt for correct format
                     break;
                 case "2":
@@ -364,7 +366,7 @@ public class CLI {
     }
 
     private void fuelEfficiencyReportMenu() {
-        System.out.println("--- Fuel Efficiency Report ---");
+        System.out.println("\n=== Fuel Efficiency Report ===");
         List<Vehicle> vehicles = fileHandler.readVehiclesFromFile();
         ArrayList<Vehicle> fleet = new ArrayList<>(vehicles);
 

@@ -1,2 +1,5 @@
 PKG001 | Accra | Kumasi | REG123 | DR001 | 2025-07-15 | In Transit
 PKG002 | Tema | Takoradi | REG456 | DR002 | 2025-07-16 | Pending
+PKG003 | Sunyani | Ho | GR1234-23 | DR003 | 2025-07-17 | Delivered
+PKG004 | Tamale | Accra | AS5678-22 | DR004 | 2025-07-18 | In Transit
+PKG005 | Cape Coast | Koforidua | BA9101-21 | DR005 | 2025-07-19 | Pending

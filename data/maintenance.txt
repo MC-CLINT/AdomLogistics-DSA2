@@ -1,2 +1,5 @@
-REG123 | 2025-06-01 | [Oil Filter, $50], [Brake Pad, $75] | Total: $125
-REG456 | 2025-07-10 | [Tire, $100] | Total: $100
+REG123 | 2025-06-01 | [Oil Filter, GH₵400], [Brake Pad, GH₵600] | Total: GH₵1000
+REG456 | 2025-07-10 | [Tire, GH₵800] | Total: GH₵800
+GR1234-23 | 2025-05-20 | [Air Filter, GH₵480] | Total: GH₵480
+AS5678-22 | 2025-03-15 | [Battery, GH₵960] | Total: GH₵960
+BA9101-21 | 2025-02-10 | [Spark Plug, GH₵320] | Total: GH₵320
