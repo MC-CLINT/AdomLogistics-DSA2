@@ -7,11 +7,16 @@ import java.util.*;
 
 public class FileHandler {
 
+    // File path constants
+    private static final String VEHICLE_FILE = "data/vehicle.txt";
+    private static final String DELIVERY_FILE = "data/delivery.txt";
+    // Add more as needed (e.g., DRIVERS_FILE, MAINTENANCE_FILE)
+
     // === VEHICLE METHODS ===
 
-    public List<Vehicle> readVehiclesFromFile(String filename) {
+    public List<Vehicle> readVehiclesFromFile() {
         List<Vehicle> vehicles = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(VEHICLE_FILE))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (!line.trim().isEmpty()) {
@@ -51,8 +56,8 @@ public class FileHandler {
         return vehicles;
     }
 
-    public void writeVehiclesToFile(List<Vehicle> vehicles, String filename) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+    public void writeVehiclesToFile(List<Vehicle> vehicles) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(VEHICLE_FILE))) {
             for (Vehicle v : vehicles) {
                 StringBuilder sb = new StringBuilder();
                 sb.append(v.getRegNumber()).append(" | ")
@@ -75,8 +80,8 @@ public class FileHandler {
         }
     }
 
-    public boolean addVehicleToFile(String filename, Vehicle vehicle) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename, true))) {
+    public boolean addVehicleToFile(Vehicle vehicle) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(VEHICLE_FILE, true))) {
             StringBuilder sb = new StringBuilder();
             sb.append(vehicle.getRegNumber()).append(" | ")
               .append(vehicle.getType()).append(" | ")
@@ -98,17 +103,17 @@ public class FileHandler {
         }
     }
 
-    public boolean removeVehicleFromFile(String filename, String regNumber) {
-        List<Vehicle> vehicles = readVehiclesFromFile(filename);
+    public boolean removeVehicleFromFile(String regNumber) {
+        List<Vehicle> vehicles = readVehiclesFromFile();
         boolean removed = vehicles.removeIf(v -> v.getRegNumber().equalsIgnoreCase(regNumber));
         if (removed) {
-            writeVehiclesToFile(vehicles, filename);
+            writeVehiclesToFile(vehicles);
         }
         return removed;
     }
 
-    public boolean updateVehicleInFile(String filename, String regNumber, Vehicle updatedVehicle) {
-        List<Vehicle> vehicles = readVehiclesFromFile(filename);
+    public boolean updateVehicleInFile(String regNumber, Vehicle updatedVehicle) {
+        List<Vehicle> vehicles = readVehiclesFromFile();
         boolean updated = false;
         for (int i = 0; i < vehicles.size(); i++) {
             Vehicle v = vehicles.get(i);
@@ -119,16 +124,16 @@ public class FileHandler {
             }
         }
         if (updated) {
-            writeVehiclesToFile(vehicles, filename);
+            writeVehiclesToFile(vehicles);
         }
         return updated;
     }
 
     // === DELIVERY METHODS ===
 
-    public List<PackageDelivery> readDeliveriesFromFile(String filename) {
+    public List<PackageDelivery> readDeliveriesFromFile() {
         List<PackageDelivery> deliveries = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(DELIVERY_FILE))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (!line.trim().isEmpty()) {
@@ -154,8 +159,8 @@ public class FileHandler {
         return deliveries;
     }
 
-    public void writeDeliveriesToFile(List<PackageDelivery> deliveries, String filename) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+    public void writeDeliveriesToFile(List<PackageDelivery> deliveries) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(DELIVERY_FILE))) {
             for (PackageDelivery pd : deliveries) {
                 bw.write(pd.getPackageId() + " | " + pd.getOrigin() + " | " + pd.getDestination() + " | " +
                          pd.getAssignedVehicle() + " | " + pd.getAssignedDriver() + " | " + pd.getEta() + " | " + pd.getStatus());
@@ -166,8 +171,8 @@ public class FileHandler {
         }
     }
 
-    public boolean addDeliveryToFile(String filename, PackageDelivery pd) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename, true))) {
+    public boolean addDeliveryToFile(PackageDelivery pd) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(DELIVERY_FILE, true))) {
             bw.write(pd.getPackageId() + " | " + pd.getOrigin() + " | " + pd.getDestination() + " | " +
                      pd.getAssignedVehicle() + " | " + pd.getAssignedDriver() + " | " + pd.getEta() + " | " + pd.getStatus());
             bw.newLine();
@@ -178,17 +183,17 @@ public class FileHandler {
         }
     }
 
-    public boolean removeDeliveryFromFile(String filename, String packageId) {
-        List<PackageDelivery> deliveries = readDeliveriesFromFile(filename);
+    public boolean removeDeliveryFromFile(String packageId) {
+        List<PackageDelivery> deliveries = readDeliveriesFromFile();
         boolean removed = deliveries.removeIf(pd -> pd.getPackageId().equalsIgnoreCase(packageId));
         if (removed) {
-            writeDeliveriesToFile(deliveries, filename);
+            writeDeliveriesToFile(deliveries);
         }
         return removed;
     }
 
-    public boolean updateDeliveryInFile(String filename, String packageId, PackageDelivery updatedPd) {
-        List<PackageDelivery> deliveries = readDeliveriesFromFile(filename);
+    public boolean updateDeliveryInFile(String packageId, PackageDelivery updatedPd) {
+        List<PackageDelivery> deliveries = readDeliveriesFromFile();
         boolean updated = false;
         for (int i = 0; i < deliveries.size(); i++) {
             if (deliveries.get(i).getPackageId().equalsIgnoreCase(packageId)) {
@@ -198,7 +203,7 @@ public class FileHandler {
             }
         }
         if (updated) {
-            writeDeliveriesToFile(deliveries, filename);
+            writeDeliveriesToFile(deliveries);
         }
         return updated;
     }
