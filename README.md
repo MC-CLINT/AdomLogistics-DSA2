@@ -24,7 +24,7 @@ This project models real-world dispatcher logic with a focus on data management 
 * ✅ Schedule and manage maintenance records per vehicle
 * ✅ Analyze vehicle fuel efficiency with custom reports
 
----
+
 
 ## Getting Started
 
@@ -57,7 +57,7 @@ This project models real-world dispatcher logic with a focus on data management 
    java -cp bin utils.Main
    ```
 
----
+
 
 ## Folder Structure
 
@@ -69,7 +69,7 @@ This project models real-world dispatcher logic with a focus on data management 
 | `report.md` | Project report and design analysis                  |
 | `README.md` | Project instructions                                |
 
----
+
 
 ## Data Management
 
@@ -77,7 +77,7 @@ This project models real-world dispatcher logic with a focus on data management 
 * Files are read and written manually using Java IO classes.
 * Ensure the **`data/`** folder exists before running the application.
 
----
+
 
 ## Authors — Adom Logistics Group 52
 
@@ -91,7 +91,7 @@ This project models real-world dispatcher logic with a focus on data management 
 | Fuel Report Analyst          | Prince William |
 | File I/O & CLI Designer      | Melissa        |
 
----
+
 
 ## Future Improvements
 
@@ -100,6 +100,6 @@ This project models real-world dispatcher logic with a focus on data management 
 * REST API for remote access
 * Enhanced reporting with analytics
 
----
+
 
 
