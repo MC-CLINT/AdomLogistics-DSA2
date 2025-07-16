@@ -14,9 +14,9 @@ public class CLI {
     private FileHandler fileHandler = new FileHandler();
     private driver.DriverManager driverManager = new driver.DriverManager();
     public void showMainMenu() {
-        System.out.println("\n╔══════════════════════════════════╗");
-        System.out.println("║     Adom Logistics System        ║");
-        System.out.println("╚══════════════════════════════════╝");
+        System.out.println("\n╔═════════════════════════════════════════╗");
+        System.out.println("║     Adom Logistics Dispatcher System    ║");
+        System.out.println("╚═════════════════════════════════════════╝");
         System.out.println("\nA comprehensive fleet management solution for tracking");
         System.out.println("vehicles, drivers, deliveries, maintenance and fuel efficiency.\n");
         System.out.println("What would you like to do today?\n");
